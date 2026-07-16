@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STITCHSEAL — 대시보드</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.css">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .dash-main { max-width: var(--maxw); margin: 0 auto; padding: 120px 24px 80px; }
+  .dash-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
+
+  .dash-stats {
+    margin-top: 36px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+  }
+  @media (max-width: 860px) { .dash-stats { grid-template-columns: repeat(2, 1fr); } }
+  .ds {
+    background: var(--bg-card); border: 1px solid var(--line); border-radius: 16px;
+    padding: 22px 22px 18px;
+  }
+  .ds .n { font-size: 30px; font-weight: 200; }
+  .ds .n b { font-weight: 500; color: var(--accent); }
+  .ds .l { margin-top: 6px; font-size: 11px; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--txt-faint); }
+
+  .season-label {
+    margin: 44px 0 16px;
+    font-size: 11px; font-weight: 400; letter-spacing: 0.32em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  .looks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 960px) { .looks { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .looks { grid-template-columns: 1fr; } }
+
+  .look {
+    background: var(--bg-card); border: 1px solid var(--line); border-radius: 16px;
+    padding: 22px;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .look:hover { transform: translateY(-4px); border-color: rgba(124,58,237,0.35); box-shadow: 0 10px 30px rgba(33,29,24,0.07); }
+  .look-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .look h3 { font-size: 15px; font-weight: 500; line-height: 1.45; }
+  .look .file { margin-top: 6px; font-size: 12px; font-weight: 300; color: var(--txt-faint); word-break: break-all; }
+  .look .hash {
+    margin-top: 14px;
+    font-family: 'SF Mono', ui-monospace, Menlo, monospace;
+    font-size: 11px; color: var(--accent-2);
+    background: rgba(194,85,154,0.06);
+    border: 1px solid rgba(194,85,154,0.15);
+    border-radius: 8px; padding: 8px 10px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .look .meta { margin-top: 12px; font-size: 11.5px; font-weight: 300; color: var(--txt-faint); }
+  .look .foot { margin-top: 16px; display: flex; gap: 14px; align-items: center; }
+  .look .foot a {
+    font-size: 12px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--accent); text-decoration: none;
+  }
+  .look .foot a:hover { text-decoration: underline; }
+  .look .foot .disabled { color: var(--txt-faint); cursor: default; text-decoration: none !important; }
+
+  .empty-hint {
+    margin-top: 12px; font-size: 12.5px; font-weight: 300; color: var(--txt-faint);
+  }
+</style>
+</head>
+<body>
+<div id="page">
+
+  <header class="site">
+    <div class="header-in">
+      <a class="logo" href="home.html">STITCHSEAL</a>
+      <nav>
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="verify.html">Verify</a>
+        <a class="nav-cta" href="register.html">디자인 등록</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="dash-main">
+    <div class="dash-head">
+      <div>
+        <div class="sec-eyebrow">Dashboard</div>
+        <h1 class="app-title">내 <b>컬렉션</b></h1>
+        <p class="app-desc">봉인된 디자인의 증거와 권리 상태를 한눈에 — 등록이 쌓일수록 카탈로그가 됩니다.</p>
+      </div>
+      <a class="btn btn-primary" href="register.html">새 디자인 등록</a>
+    </div>
+
+    <div class="dash-stats">
+      <div class="ds"><div class="n" id="s-total"><b>0</b></div><div class="l">등록 디자인</div></div>
+      <div class="ds"><div class="n" id="s-sealed"><b>0</b></div><div class="l">봉인 완료</div></div>
+      <div class="ds"><div class="n" id="s-filing"><b>0</b></div><div class="l">출원 연계 중</div></div>
+      <div class="ds"><div class="n" id="s-catalog"><b>0</b></div><div class="l">B2B 카탈로그 노출</div></div>
+    </div>
+
+    <div id="collections"></div>
+
+    <div class="notice" style="margin-top: 44px;">
+      <b>프로토타입 안내:</b> 아래 26FW 시즌은 데모 데이터입니다. 등록 데모에서 봉인한 디자인은
+      "이번 세션" 시즌에 실제 해시와 함께 나타납니다.
+    </div>
+  </main>
+
+  <footer class="site">
+    <div class="footer-in">
+      <div>
+        <div class="footer-logo">STITCHSEAL</div>
+        <div class="footer-copy">Prove first. Then show.<br>Copyright © STITCHSEAL. All rights reserved.</div>
+      </div>
+      <div class="footer-links">
+        <a href="home.html">Home</a>
+        <a href="register.html">Register</a>
+        <a href="verify.html">Verify</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+requestAnimationFrame(function() {
+  requestAnimationFrame(function() { document.getElementById('page').classList.add('in'); });
+});
+
+// ── 데모 시즌 데이터 (프로토타입) ──
+var DEMO_SEASONS = [
+  {
+    season: '26FW — Wool & Structure',
+    looks: [
+      { title: 'Look 01 — 오버사이즈 더블 코트', file: 'look01_flat.png', hash: '0x8f2e…d41a', sealedAt: '2026. 6. 30. 오전 10:12', status: 'filing',  cert: false },
+      { title: 'Look 04 — 비대칭 랩 스커트',   file: 'look04_flat.png', hash: '0x1c7b…09e3', sealedAt: '2026. 7. 2. 오후 2:47',  status: 'catalog', cert: false },
+      { title: 'Look 07 — 테일러드 코트',      file: 'look07_flat.png', hash: '0xa93d…77f0', sealedAt: '2026. 7. 8. 오후 6:03',  status: 'sealed',  cert: false }
+    ]
+  }
+];
+
+var STATUS = {
+  sealed:  { cls: 'ok',   label: 'Sealed · 봉인 완료' },
+  filing:  { cls: 'pend', label: 'Filing · 출원 연계 중' },
+  catalog: { cls: 'ok',   label: 'Catalog · 카탈로그 노출' }
+};
+
+function lookCard(l, isLive) {
+  var st = STATUS[l.status];
+  return '<div class="look">' +
+    '<div class="look-top"><h3>' + l.title + '</h3>' +
+    '<span class="badge ' + st.cls + '">' + st.label + '</span></div>' +
+    '<div class="file">' + l.file + '</div>' +
+    '<div class="hash">' + l.hash + '</div>' +
+    '<div class="meta">봉인 시각 · ' + l.sealedAt + '</div>' +
+    '<div class="foot">' +
+      (isLive
+        ? '<a href="certificate.html">증명서 보기</a><a href="verify.html">검증</a>'
+        : '<a class="disabled">증명서 (데모)</a>') +
+    '</div></div>';
+}
+
+(function render() {
+  var seasons = [];
+
+  // 이번 세션에서 실제 봉인한 기록
+  var rec = null;
+  try { rec = JSON.parse(sessionStorage.getItem('stitchseal_record')); } catch (e) {}
+  if (rec) {
+    seasons.push({
+      season: '이번 세션 — 방금 봉인한 디자인',
+      looks: [{
+        title: rec.title, file: rec.fileName,
+        hash: rec.hash.slice(0, 10) + '…' + rec.hash.slice(-6),
+        sealedAt: new Date(rec.sealedAt).toLocaleString('ko-KR'),
+        status: 'sealed', live: true
+      }]
+    });
+  }
+  seasons = seasons.concat(DEMO_SEASONS);
+
+  var html = '';
+  var total = 0, sealed = 0, filing = 0, catalog = 0;
+  seasons.forEach(function(s) {
+    html += '<div class="season-label">' + s.season + '</div><div class="looks">';
+    s.looks.forEach(function(l) {
+      html += lookCard(l, !!l.live);
+      total++;
+      if (l.status === 'sealed') sealed++;
+      if (l.status === 'filing') filing++;
+      if (l.status === 'catalog') catalog++;
+    });
+    html += '</div>';
+  });
+  document.getElementById('collections').innerHTML = html;
+
+  document.getElementById('s-total').innerHTML   = '<b>' + total + '</b>';
+  document.getElementById('s-sealed').innerHTML  = '<b>' + (sealed + catalog) + '</b>';
+  document.getElementById('s-filing').innerHTML  = '<b>' + filing + '</b>';
+  document.getElementById('s-catalog').innerHTML = '<b>' + catalog + '</b>';
+})();
+</script>
+</body>
+</html>

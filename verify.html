@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STITCHSEAL — 검증</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.css">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .verdict { margin-top: 28px; text-align: center; padding: 40px 24px; border-radius: 18px; }
+  .verdict.match { border: 1px solid rgba(14,138,95,0.35); background: rgba(14,138,95,0.05); }
+  .verdict.nomatch { border: 1px solid rgba(196,61,61,0.3); background: rgba(196,61,61,0.04); }
+  .verdict .big { font-size: clamp(20px, 3vw, 28px); font-weight: 300; letter-spacing: 0.04em; }
+  .verdict.match .big { color: var(--ok); }
+  .verdict.nomatch .big { color: var(--danger); }
+  .verdict p { margin-top: 12px; font-size: 13px; font-weight: 300; color: var(--txt-dim); line-height: 1.7; }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div id="page">
+
+  <header class="site">
+    <div class="header-in">
+      <a class="logo" href="home.html">STITCHSEAL</a>
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="verify.html" class="active">Verify</a>
+        <a class="nav-cta" href="register.html">디자인 등록</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <div class="sec-eyebrow">Public Verification</div>
+    <h1 class="app-title">누구나, <b>검증할 수 있습니다</b></h1>
+    <p class="app-desc">
+      파일을 올리면 브라우저에서 SHA-256 지문을 다시 계산해 StitchSeal 등록부와 대조합니다.<br>
+      바이어·법률 대리인·분쟁 상대방 — 누구든 같은 결과를 얻습니다. 그것이 증거의 조건입니다.
+    </p>
+
+    <div class="dropzone" id="dropzone" style="margin-top: 36px;">
+      <div class="dz-icon">⌕</div>
+      <div class="dz-main">검증할 파일을 끌어다 놓거나 클릭해서 선택</div>
+      <div class="dz-sub">파일 원본은 브라우저 밖으로 나가지 않습니다</div>
+    </div>
+    <input type="file" id="file-input" style="display:none" />
+
+    <div id="result" class="hidden">
+      <div class="panel">
+        <div class="row"><div class="k">파일</div><div class="v" id="v-file">—</div></div>
+        <div class="row"><div class="k">계산된 지문</div><div class="v mono" id="v-hash">—</div></div>
+      </div>
+
+      <div class="verdict match hidden" id="verdict-match">
+        <div class="big">✓ 등록부와 일치</div>
+        <p id="match-detail">이 파일은 등록된 원본과 비트 단위까지 동일합니다.</p>
+      </div>
+      <div class="verdict nomatch hidden" id="verdict-nomatch">
+        <div class="big">✕ 등록 기록 없음</div>
+        <p>이 파일과 일치하는 봉인 기록을 찾지 못했습니다.<br>파일이 1바이트라도 수정되면 지문이 달라집니다 — 원본 파일로 다시 시도해 보세요.</p>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-ghost" onclick="location.reload()">다른 파일 검증</button>
+        <a class="btn btn-ghost" href="register.html">디자인 등록</a>
+      </div>
+    </div>
+
+    <div class="notice" style="margin-top: 40px;">
+      <b>프로토타입 안내:</b> 이 데모는 같은 브라우저 세션에서 등록한 기록과 대조합니다.
+      실제 서비스에서는 블록체인에 기록된 앵커와 대조하므로, StitchSeal이 사라져도 증거는 남습니다.
+    </div>
+  </main>
+
+  <footer class="site">
+    <div class="footer-in">
+      <div>
+        <div class="footer-logo">STITCHSEAL</div>
+        <div class="footer-copy">Prove first. Then show.<br>Copyright © STITCHSEAL. All rights reserved.</div>
+      </div>
+      <div class="footer-links">
+        <a href="home.html">Home</a>
+        <a href="register.html">Register</a>
+        <a href="certificate.html">Certificate</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+requestAnimationFrame(function() {
+  requestAnimationFrame(function() { document.getElementById('page').classList.add('in'); });
+});
+
+var dz = document.getElementById('dropzone');
+var fileInput = document.getElementById('file-input');
+
+dz.addEventListener('click', function() { fileInput.click(); });
+dz.addEventListener('dragover', function(e) { e.preventDefault(); dz.classList.add('drag'); });
+dz.addEventListener('dragleave', function() { dz.classList.remove('drag'); });
+dz.addEventListener('drop', function(e) {
+  e.preventDefault(); dz.classList.remove('drag');
+  if (e.dataTransfer.files.length) verifyFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener('change', function() {
+  if (fileInput.files.length) verifyFile(fileInput.files[0]);
+});
+
+async function verifyFile(file) {
+  document.getElementById('result').classList.remove('hidden');
+  document.getElementById('v-file').textContent = file.name + ' (' + (file.size / 1024).toFixed(1) + ' KB)';
+
+  var buf = await file.arrayBuffer();
+  var digest = await crypto.subtle.digest('SHA-256', buf);
+  var hash = '0x' + Array.from(new Uint8Array(digest)).map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
+  document.getElementById('v-hash').textContent = hash;
+
+  // 세션 등록부와 대조 (실서비스: 체인 앵커 대조)
+  var rec = null;
+  try { rec = JSON.parse(sessionStorage.getItem('stitchseal_record')); } catch (e) {}
+
+  if (rec && rec.hash === hash) {
+    document.getElementById('verdict-match').classList.remove('hidden');
+    document.getElementById('verdict-nomatch').classList.add('hidden');
+    document.getElementById('match-detail').innerHTML =
+      '「' + rec.title + '」 — ' + rec.designer + '<br>봉인 시각: ' + new Date(rec.sealedAt).toLocaleString('ko-KR') + ' KST';
+  } else {
+    document.getElementById('verdict-nomatch').classList.remove('hidden');
+    document.getElementById('verdict-match').classList.add('hidden');
+  }
+}
+</script>
+</body>
+</html>

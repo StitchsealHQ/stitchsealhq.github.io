@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STITCHSEAL — 창작 증명서</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div id="page">
+
+  <header class="site">
+    <div class="header-in">
+      <a class="logo" href="home.html">STITCHSEAL</a>
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="verify.html">Verify</a>
+        <a class="nav-cta" href="register.html">디자인 등록</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <div class="sec-eyebrow">Certificate of Creation</div>
+    <h1 class="app-title">창작 <b>증명서</b></h1>
+    <p class="app-desc">이 증명서의 해시는 블록체인 기록과 대조해 누구나 검증할 수 있습니다.</p>
+
+    <div class="cert">
+      <div class="cert-brand">Stitchseal</div>
+      <div class="cert-type">CERTIFICATE OF CREATION</div>
+      <div class="cert-seal">◈</div>
+
+      <div class="panel" style="margin-top: 8px; background: rgba(250,247,242,0.55);">
+        <div class="row"><div class="k">작품명</div><div class="v" id="c-title">26FW 컬렉션 — Look 07 테일러드 코트 (샘플)</div></div>
+        <div class="row"><div class="k">디자이너</div><div class="v" id="c-designer">김디자이너 (STUDIO XYZ)</div></div>
+        <div class="row"><div class="k">파일</div><div class="v" id="c-file">look07_flat-sketch.png</div></div>
+        <div class="row"><div class="k">SHA-256 지문</div><div class="v mono" id="c-hash">0x3f1a…샘플 데이터입니다. 등록 데모를 거치면 실제 값이 표시됩니다.</div></div>
+        <div class="row"><div class="k">Tx Hash</div><div class="v mono" id="c-tx">0xa4c9…(demo)</div></div>
+        <div class="row"><div class="k">봉인 시각</div><div class="v" id="c-time">2026. 7. 16. 오후 9:00:00 KST</div></div>
+        <div class="row"><div class="k">상태</div><div class="v"><span class="badge ok">Sealed · 봉인 완료</span></div></div>
+      </div>
+    </div>
+
+    <div class="notice">
+      본 증명서는 창작 시점에 대한 <b>기술적 증거</b>이며 법적 권리(디자인권)를 부여하지 않습니다.
+      정식 권리 확보는 디자인보호법 등록(변리사 제휴 출원 연계), 도용 대응은 부정경쟁방지법 (자)목과
+      본 증거의 결합으로 이루어집니다.
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="window.print()">PDF로 저장</button>
+      <a class="btn btn-ghost" href="verify.html">이 파일 검증하기</a>
+      <a class="btn btn-ghost" href="register.html">새 디자인 등록</a>
+    </div>
+  </main>
+
+  <footer class="site">
+    <div class="footer-in">
+      <div>
+        <div class="footer-logo">STITCHSEAL</div>
+        <div class="footer-copy">Prove first. Then show.<br>Copyright © STITCHSEAL. All rights reserved.</div>
+      </div>
+      <div class="footer-links">
+        <a href="home.html">Home</a>
+        <a href="register.html">Register</a>
+        <a href="verify.html">Verify</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+requestAnimationFrame(function() {
+  requestAnimationFrame(function() { document.getElementById('page').classList.add('in'); });
+});
+
+// 등록 데모를 거쳐 왔으면 실제 기록으로 채움 (없으면 샘플 유지)
+(function() {
+  try {
+    var rec = JSON.parse(sessionStorage.getItem('stitchseal_record'));
+    if (!rec) return;
+    document.getElementById('c-title').textContent = rec.title;
+    document.getElementById('c-designer').textContent = rec.designer;
+    document.getElementById('c-file').textContent = rec.fileName + ' (' + (rec.fileSize / 1024).toFixed(1) + ' KB)';
+    document.getElementById('c-hash').textContent = rec.hash;
+    document.getElementById('c-tx').textContent = rec.tx + ' (demo)';
+    document.getElementById('c-time').textContent = new Date(rec.sealedAt).toLocaleString('ko-KR') + ' KST';
+  } catch (e) { /* 샘플 데이터 유지 */ }
+})();
+</script>
+</body>
+</html>

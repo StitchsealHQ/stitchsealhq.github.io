@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STITCHSEAL — 디자인 등록</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.css">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .field { margin-top: 18px; }
+  .field label {
+    display: block;
+    font-size: 11px; font-weight: 300; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 10px;
+  }
+  .field input[type="text"] {
+    width: 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-family: var(--font);
+    font-size: 14px; font-weight: 300;
+    color: var(--txt);
+    outline: none;
+    transition: border-color 0.25s;
+  }
+  .field input[type="text"]:focus { border-color: var(--accent); }
+  .anchor-anim { display: flex; align-items: center; gap: 12px; padding: 14px 0; }
+  .spinner {
+    width: 16px; height: 16px;
+    border: 1.5px solid rgba(124,58,237,0.25);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div id="page">
+
+  <header class="site">
+    <div class="header-in">
+      <a class="logo" href="home.html">STITCHSEAL</a>
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="verify.html">Verify</a>
+        <a class="nav-cta active" href="register.html">디자인 등록</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <div class="sec-eyebrow">Register &amp; Seal — Demo</div>
+    <h1 class="app-title">공개 전에, <b>봉인하세요</b></h1>
+    <p class="app-desc">
+      도식화·사진·작업지시서를 올리면 파일의 SHA-256 지문을 생성해 블록체인에 기록합니다.<br>
+      파일 원본은 어디에도 전송되지 않습니다 — 이 데모의 해시 계산은 전부 브라우저 안에서 일어납니다.
+    </p>
+
+    <div class="steps">
+      <div class="st on" id="st1">1 · 업로드</div>
+      <div class="st" id="st2">2 · 지문 생성</div>
+      <div class="st" id="st3">3 · 체인 봉인</div>
+      <div class="st" id="st4">4 · 증명서</div>
+    </div>
+
+    <!-- STEP 1: 업로드 -->
+    <div id="step-upload">
+      <div class="field">
+        <label>작품명</label>
+        <input type="text" id="work-title" placeholder="예: 26FW 컬렉션 — Look 07 테일러드 코트" />
+      </div>
+      <div class="field">
+        <label>디자이너</label>
+        <input type="text" id="designer-name" placeholder="예: 김디자이너 (STUDIO XYZ)" />
+      </div>
+      <div class="field">
+        <label>디자인 파일</label>
+        <div class="dropzone" id="dropzone">
+          <div class="dz-icon">◈</div>
+          <div class="dz-main">파일을 끌어다 놓거나 클릭해서 선택</div>
+          <div class="dz-sub">도식화 · 사진 · 작업지시서 — 모든 형식 지원, 원본은 브라우저 밖으로 나가지 않습니다</div>
+        </div>
+        <input type="file" id="file-input" style="display:none" />
+      </div>
+    </div>
+
+    <!-- STEP 2~3: 해시 + 앵커링 결과 -->
+    <div id="step-result" class="hidden">
+      <div class="panel">
+        <div class="row"><div class="k">작품명</div><div class="v" id="r-title">—</div></div>
+        <div class="row"><div class="k">디자이너</div><div class="v" id="r-designer">—</div></div>
+        <div class="row"><div class="k">파일</div><div class="v" id="r-file">—</div></div>
+        <div class="row"><div class="k">SHA-256 지문</div><div class="v mono" id="r-hash">계산 중…</div></div>
+        <div class="row"><div class="k">체인 기록</div><div class="v" id="r-anchor">
+          <div class="anchor-anim" id="anchor-anim"><div class="spinner"></div><span style="font-size:13px; color:var(--txt-dim);">퍼블릭 체인에 앵커링 중… (데모 시뮬레이션)</span></div>
+          <span class="badge ok hidden" id="anchor-done">Sealed · 봉인 완료</span>
+        </div></div>
+        <div class="row hidden" id="row-tx"><div class="k">Tx Hash</div><div class="v mono" id="r-tx">—</div></div>
+        <div class="row hidden" id="row-time"><div class="k">봉인 시각</div><div class="v" id="r-time">—</div></div>
+      </div>
+
+      <div class="notice">
+        <b>등록은 권리가 아닙니다.</b> 이 기록은 창작 시점의 <em>증거</em>입니다 — 부정경쟁방지법 (자)목 분쟁 대응과
+        디자인보호법 출원(신속심사 6일)의 출발점으로 활용됩니다. StitchSeal은 변리사 제휴 출원 연계를 함께 제공합니다.
+      </div>
+
+      <div class="actions">
+        <a class="btn btn-primary" id="btn-cert" style="pointer-events:none; opacity:0.35;" href="certificate.html">창작 증명서 보기</a>
+        <a class="btn btn-ghost" href="dashboard.html">대시보드</a>
+        <button class="btn btn-ghost" onclick="location.reload()">다른 디자인 등록</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site">
+    <div class="footer-in">
+      <div>
+        <div class="footer-logo">STITCHSEAL</div>
+        <div class="footer-copy">Prove first. Then show.<br>Copyright © STITCHSEAL. All rights reserved.</div>
+      </div>
+      <div class="footer-links">
+        <a href="home.html">Home</a>
+        <a href="verify.html">Verify</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+requestAnimationFrame(function() {
+  requestAnimationFrame(function() { document.getElementById('page').classList.add('in'); });
+});
+
+var dz = document.getElementById('dropzone');
+var fileInput = document.getElementById('file-input');
+
+dz.addEventListener('click', function() { fileInput.click(); });
+dz.addEventListener('dragover', function(e) { e.preventDefault(); dz.classList.add('drag'); });
+dz.addEventListener('dragleave', function() { dz.classList.remove('drag'); });
+dz.addEventListener('drop', function(e) {
+  e.preventDefault(); dz.classList.remove('drag');
+  if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener('change', function() {
+  if (fileInput.files.length) handleFile(fileInput.files[0]);
+});
+
+function setStep(n) {
+  ['st1','st2','st3','st4'].forEach(function(id, i) {
+    var el = document.getElementById(id);
+    el.classList.remove('on', 'done');
+    if (i + 1 < n) el.classList.add('done');
+    if (i + 1 === n) el.classList.add('on');
+  });
+}
+
+async function handleFile(file) {
+  var title = document.getElementById('work-title').value.trim() || '(작품명 미입력)';
+  var designer = document.getElementById('designer-name').value.trim() || '(디자이너 미입력)';
+
+  document.getElementById('step-upload').classList.add('hidden');
+  document.getElementById('step-result').classList.remove('hidden');
+  document.getElementById('r-title').textContent = title;
+  document.getElementById('r-designer').textContent = designer;
+  document.getElementById('r-file').textContent = file.name + ' (' + (file.size / 1024).toFixed(1) + ' KB)';
+  setStep(2);
+
+  // 실제 SHA-256 해시 계산 (Web Crypto — 브라우저 안에서만)
+  var buf = await file.arrayBuffer();
+  var digest = await crypto.subtle.digest('SHA-256', buf);
+  var hash = Array.from(new Uint8Array(digest)).map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
+  document.getElementById('r-hash').textContent = '0x' + hash;
+  setStep(3);
+
+  // 체인 앵커링 시뮬레이션 (프로토타입 — 실제 구현 시 EVM 체인 tx로 대체)
+  setTimeout(function() {
+    var now = new Date();
+    // 모의 tx 해시: 파일 해시를 뒤집어 재사용 (결정적, 데모용임이 드러나는 값)
+    var tx = '0x' + hash.split('').reverse().join('').slice(0, 64);
+    document.getElementById('anchor-anim').classList.add('hidden');
+    document.getElementById('anchor-done').classList.remove('hidden');
+    document.getElementById('row-tx').classList.remove('hidden');
+    document.getElementById('row-time').classList.remove('hidden');
+    document.getElementById('r-tx').textContent = tx + ' (demo)';
+    document.getElementById('r-time').textContent = now.toLocaleString('ko-KR') + ' KST';
+    setStep(4);
+
+    // 증명서·검증 페이지에서 읽을 수 있게 저장
+    var record = {
+      title: title, designer: designer,
+      fileName: file.name, fileSize: file.size,
+      hash: '0x' + hash, tx: tx,
+      sealedAt: now.toISOString()
+    };
+    sessionStorage.setItem('stitchseal_record', JSON.stringify(record));
+
+    var btn = document.getElementById('btn-cert');
+    btn.style.pointerEvents = '';
+    btn.style.opacity = '';
+  }, 1400);
+}
+</script>
+</body>
+</html>
