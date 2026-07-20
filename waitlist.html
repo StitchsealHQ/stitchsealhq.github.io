@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STITCHSEAL — 사전등록</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.css">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .field { margin-top: 18px; }
+  .field label {
+    display: block;
+    font-size: 11px; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 10px;
+  }
+  .field label .opt { color: var(--txt-faint); letter-spacing: 0.06em; text-transform: none; }
+  .field input[type="text"], .field input[type="email"], .field select, .field textarea {
+    width: 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-family: var(--font);
+    font-size: 14px; font-weight: 300;
+    color: var(--txt);
+    outline: none;
+    transition: border-color 0.25s;
+  }
+  .field textarea { min-height: 90px; resize: vertical; }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--accent); }
+
+  .check-group { display: grid; gap: 10px; }
+  .check {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    font-size: 14px; font-weight: 300;
+  }
+  .check:hover { border-color: rgba(124,58,237,0.35); }
+  .check input { accent-color: var(--accent); margin-top: 3px; }
+  .check b { font-weight: 500; }
+  .check .d { display: block; font-size: 12px; color: var(--txt-faint); margin-top: 2px; }
+
+  .submit-row { margin-top: 30px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .privacy { font-size: 11.5px; font-weight: 300; color: var(--txt-faint); line-height: 1.6; }
+
+  #done {
+    text-align: center; padding: 56px 24px;
+    border: 1px solid rgba(14,138,95,0.35); background: rgba(14,138,95,0.05);
+    border-radius: 18px; margin-top: 36px;
+  }
+  #done .big { font-size: clamp(20px, 3vw, 26px); font-weight: 300; color: var(--ok); }
+  #done p { margin-top: 12px; font-size: 13.5px; font-weight: 300; color: var(--txt-dim); line-height: 1.8; }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div id="page">
+
+  <header class="site">
+    <div class="header-in">
+      <a class="logo" href="home.html">STITCHSEAL</a>
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="waitlist.html" class="active">사전등록</a>
+        <a class="nav-cta" href="register.html">디자인 등록</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <div class="sec-eyebrow">Early Access</div>
+    <h1 class="app-title">먼저 증명할 분들을 <b>기다립니다</b></h1>
+    <p class="app-desc">
+      StitchSeal 정식 오픈 소식을 가장 먼저 받아보세요.<br>
+      사전등록 디자이너에게는 <b>첫 시즌 등록 무료</b> 혜택을 드립니다.
+    </p>
+
+    <form id="wl-form" style="margin-top: 28px;">
+      <!-- 스팸 방지 허니팟 -->
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+
+      <div class="field">
+        <label>이름 *</label>
+        <input type="text" name="이름" required placeholder="성함 또는 활동명">
+      </div>
+      <div class="field">
+        <label>이메일 *</label>
+        <input type="email" name="이메일" required placeholder="오픈 소식을 받을 이메일">
+      </div>
+      <div class="field">
+        <label>브랜드 / 활동 <span class="opt">(선택)</span></label>
+        <input type="text" name="브랜드" placeholder="예: STUDIO XYZ / 프리랜스 디자이너">
+      </div>
+      <div class="field">
+        <label>활동 연차 <span class="opt">(선택)</span></label>
+        <select name="연차">
+          <option value="">선택 안 함</option>
+          <option>준비 중 (런칭 전)</option>
+          <option>1~3년</option>
+          <option>4~7년</option>
+          <option>8년 이상</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>가장 기대하는 기능 <span class="opt">(복수 선택)</span></label>
+        <div class="check-group">
+          <label class="check"><input type="checkbox" name="기대기능" value="공개 전 즉시 증거">
+            <span><b>공개 전 즉시 증거</b><span class="d">런웨이·SNS에 올리기 전, 창작 시점을 블록체인에 봉인</span></span></label>
+          <label class="check"><input type="checkbox" name="기대기능" value="디자인 출원 연계">
+            <span><b>디자인 출원 연계</b><span class="d">변리사 제휴로 특허청 출원까지 원스톱</span></span></label>
+          <label class="check"><input type="checkbox" name="기대기능" value="바이어 노출·거래">
+            <span><b>바이어 노출 · 거래</b><span class="d">등록 디자인의 B2B 카탈로그 노출과 수주 연결</span></span></label>
+        </div>
+      </div>
+      <div class="field">
+        <label>하고 싶은 말 <span class="opt">(선택)</span></label>
+        <textarea name="한마디" placeholder="카피 때문에 겪은 일, 필요한 기능, 무엇이든 좋아요"></textarea>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit" class="btn btn-primary" id="submit-btn">사전등록</button>
+        <span class="privacy">입력하신 정보는 오픈 알림과 초기 사용자 혜택 안내에만 사용됩니다.</span>
+      </div>
+    </form>
+
+    <div id="done" class="hidden">
+      <div class="big">✓ 등록되었습니다</div>
+      <p>
+        정식 오픈 소식과 첫 시즌 무료 혜택을 이메일로 보내드릴게요.<br>
+        그동안 <a href="register.html" style="color:var(--accent)">등록 데모</a>를 미리 체험해 보세요 — 3초면 충분합니다.
+      </p>
+    </div>
+  </main>
+
+  <footer class="site">
+    <div class="footer-in">
+      <div>
+        <div class="footer-logo">STITCHSEAL</div>
+        <div class="footer-copy">Prove first. Then show.<br>Copyright © STITCHSEAL. All rights reserved.</div>
+      </div>
+      <div class="footer-links">
+        <a href="home.html">Home</a>
+        <a href="register.html">Register</a>
+        <a href="verify.html">Verify</a>
+        <a href="waitlist.html">Waitlist</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+requestAnimationFrame(function() {
+  requestAnimationFrame(function() { document.getElementById('page').classList.add('in'); });
+});
+
+// FormSubmit AJAX — 제출 내용이 운영자 이메일로 전달됨 (첫 제출 시 활성화 메일 승인 필요)
+var ENDPOINT = 'https://formsubmit.co/ajax/ajj07135@gmail.com';
+
+document.getElementById('wl-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  var form = e.target;
+  var btn = document.getElementById('submit-btn');
+  if (form._honey.value) return; // 봇
+  btn.disabled = true;
+  btn.textContent = '등록 중…';
+
+  var data = {
+    _subject: '[StitchSeal] 새 사전등록',
+    _template: 'table',
+    이름: form['이름'].value,
+    이메일: form['이메일'].value,
+    브랜드: form['브랜드'].value || '-',
+    연차: form['연차'].value || '-',
+    기대기능: Array.from(form.querySelectorAll('input[name="기대기능"]:checked')).map(function(c){ return c.value; }).join(', ') || '-',
+    한마디: form['한마디'].value || '-'
+  };
+
+  try {
+    var res = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    var json = await res.json();
+    if (!res.ok || String(json.success) === 'false') throw new Error(json.message || ('http ' + res.status));
+    form.classList.add('hidden');
+    document.getElementById('done').classList.remove('hidden');
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = '사전등록';
+    alert('등록에 실패했어요. 잠시 후 다시 시도해주세요.');
+  }
+});
+</script>
+</body>
+</html>
