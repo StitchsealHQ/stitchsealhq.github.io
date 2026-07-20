@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STITCHSEAL — For Buyers</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.css">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  /* 승인제 스텝 */
+  .approve-steps { margin-top: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 720px) { .approve-steps { grid-template-columns: 1fr; } }
+
+  /* 데모 모드 배너 */
+  .demo-bar {
+    margin-top: 56px;
+    display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+    background: rgba(124,58,237,0.06);
+    border: 1px solid rgba(124,58,237,0.25);
+    border-radius: 14px;
+    padding: 14px 20px;
+  }
+  .demo-bar .who { font-size: 13.5px; font-weight: 400; }
+  .demo-bar .who b { color: var(--accent); }
+  .log-note {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 400; letter-spacing: 0.04em;
+    color: var(--txt-dim);
+  }
+  .log-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--danger);
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  /* 카탈로그 카드 */
+  .cat-grid { margin-top: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 960px) { .cat-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .cat-grid { grid-template-columns: 1fr; } }
+  .cat-card {
+    background: var(--bg-card); border: 1px solid var(--line); border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .cat-card:hover { transform: translateY(-4px); border-color: rgba(124,58,237,0.35); box-shadow: 0 10px 30px rgba(33,29,24,0.07); }
+
+  /* 워터마크 프리뷰 (실제 서비스: 저해상도+워터마크, 원본은 협의 후) */
+  .swatch {
+    position: relative; height: 190px; overflow: hidden;
+    filter: saturate(0.9);
+  }
+  .swatch .fabric { position: absolute; inset: 0; filter: blur(1.5px); }
+  .swatch .wm {
+    position: absolute; inset: -60%;
+    display: flex; flex-wrap: wrap; align-content: space-around;
+    transform: rotate(-24deg);
+    pointer-events: none;
+  }
+  .swatch .wm span {
+    font-size: 12px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    text-shadow: 0 0 6px rgba(33,29,24,0.25);
+    padding: 18px 24px; white-space: nowrap;
+  }
+  .f1 { background: linear-gradient(135deg, #4b3a63 0 25%, #6d5488 25% 50%, #4b3a63 50% 75%, #6d5488 75%); background-size: 44px 44px; }
+  .f2 { background: repeating-linear-gradient(90deg, #8a6f52 0 14px, #a5896b 14px 28px, #74593e 28px 42px); }
+  .f3 { background: radial-gradient(circle at 30% 30%, #b98da4 0 18%, transparent 19%), radial-gradient(circle at 70% 65%, #b98da4 0 14%, transparent 15%), #94657f; }
+  .f4 { background: repeating-linear-gradient(45deg, #37455a 0 18px, #4d6076 18px 36px); }
+  .f5 { background: linear-gradient(160deg, #6e7f66 0 55%, #8b9c80 55%); }
+  .f6 { background: repeating-linear-gradient(0deg, #7d3b4a 0 10px, #935361 10px 20px), repeating-linear-gradient(90deg, transparent 0 10px, rgba(255,255,255,0.06) 10px 20px); }
+
+  .cat-body { padding: 18px 20px 20px; }
+  .cat-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .cat-body h3 { font-size: 14.5px; font-weight: 500; line-height: 1.4; }
+  .cat-body .designer { margin-top: 4px; font-size: 12px; font-weight: 300; color: var(--txt-dim); }
+  .cat-meta { margin-top: 10px; font-size: 11px; font-weight: 300; color: var(--txt-faint); line-height: 1.7; }
+  .cat-meta b { color: var(--ok); font-weight: 500; }
+  .cat-actions { margin-top: 14px; display: flex; gap: 8px; align-items: center; }
+  .btn-sm {
+    padding: 9px 18px; border-radius: 999px; border: none; cursor: pointer;
+    font-family: var(--font); font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .btn-sm.primary { background: var(--accent); color: #fff; }
+  .btn-sm.primary:hover { background: var(--accent-deep); }
+  .btn-sm.ghost { background: transparent; border: 1px solid rgba(33,29,24,0.22); color: rgba(33,29,24,0.7); }
+  .btn-sm.ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .viewed { font-size: 10.5px; color: var(--txt-faint); letter-spacing: 0.04em; }
+</style>
+</head>
+<body>
+<div id="page">
+
+  <header class="site">
+    <div class="header-in">
+      <a class="logo" href="home.html">STITCHSEAL</a>
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="buyers.html" class="active">Buyers</a>
+        <a href="waitlist.html">사전등록</a>
+        <a class="nav-cta" href="register.html">디자인 등록</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="app-main" style="max-width: 1120px;">
+    <div class="sec-eyebrow">For Buyers</div>
+    <h1 class="app-title">검증된 바이어에게만, <b>열리는 카탈로그</b></h1>
+    <p class="app-desc">
+      봉인된 디자인 중 디자이너가 공개를 허락한 룩만, 승인된 바이어에게만 보입니다.<br>
+      아무나 들어올 수 없는 소싱 채널 — 그래서 디자이너가 안심하고 올립니다.
+    </p>
+
+    <div class="approve-steps">
+      <div class="card"><div class="step-no">01</div><h3>바이어 신청</h3><div class="en">Apply</div>
+        <p>회사·브랜드 정보와 사업자등록번호로 신청합니다.</p></div>
+      <div class="card"><div class="step-no">02</div><h3>심사 · 승인</h3><div class="en">Verify</div>
+        <p>실제 바잉 주체인지 확인 후 승인합니다 (1~2일). 카피 이력 업체는 입장할 수 없습니다.</p></div>
+      <div class="card"><div class="step-no">03</div><h3>카탈로그 입장</h3><div class="en">Source</div>
+        <p>워터마크 프리뷰로 탐색하고, 관심 디자인은 디자이너와 직접 협의합니다. 모든 열람은 기록됩니다.</p></div>
+    </div>
+
+    <!-- 데모 모드 -->
+    <div class="demo-bar">
+      <div class="who">👔 <b>K-BUYING (승인 바이어)</b>로 둘러보는 중 — 데모 모드</div>
+      <div class="log-note"><span class="log-dot"></span> 이 페이지의 모든 열람이 기록되고 있습니다 · 열람 로그는 도용 분쟁 시 증거로 활용됩니다</div>
+    </div>
+
+    <div class="season-label" style="margin-top: 28px;">26FW — 공개 허용 룩 (데모 데이터)</div>
+    <div class="cat-grid" id="cat"></div>
+
+    <div class="notice" style="margin-top: 40px;">
+      <b>바이어에게 보이는 것과 보이지 않는 것:</b> 프리뷰는 워터마크·저해상도로 제공되며 원본 파일은
+      디자이너와의 협의 후에만 전달됩니다. 봉인(창작 시점 증거)과 열람 로그(접촉 기록)가 결합되어 —
+      만에 하나의 도용에도 증거 체인이 남습니다.
+    </div>
+
+    <div class="actions" style="justify-content: center; margin-top: 40px;">
+      <a class="btn btn-primary" href="waitlist.html">바이어 사전등록 문의</a>
+      <a class="btn btn-ghost" href="home.html">서비스 소개</a>
+    </div>
+  </main>
+
+  <footer class="site">
+    <div class="footer-in">
+      <div>
+        <div class="footer-logo">STITCHSEAL</div>
+        <div class="footer-copy">Prove first. Then show.<br>Copyright © STITCHSEAL. All rights reserved.</div>
+      </div>
+      <div class="footer-links">
+        <a href="home.html">Home</a>
+        <a href="register.html">Register</a>
+        <a href="verify.html">Verify</a>
+        <a href="waitlist.html">Waitlist</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+requestAnimationFrame(function() {
+  requestAnimationFrame(function() { document.getElementById('page').classList.add('in'); });
+});
+
+// 데모 카탈로그 (디자이너가 '바이어 공개'로 허용한 룩만 노출된다는 설정)
+var LOOKS = [
+  { t: 'Look 02 — 스트럭처드 울 재킷', d: 'STUDIO HAAN', f: 'f1', sealed: '2026.06.28', views: 14 },
+  { t: 'Look 05 — 헤리티지 트렌치', d: 'STUDIO HAAN', f: 'f2', sealed: '2026.07.01', views: 9 },
+  { t: 'Look 11 — 도트 자카드 드레스', d: 'MAISON VERT', f: 'f3', sealed: '2026.07.03', views: 21 },
+  { t: 'Look 03 — 바이어스 컷 수트', d: 'MAISON VERT', f: 'f4', sealed: '2026.07.05', views: 7 },
+  { t: 'Look 08 — 세이지 오버셔츠', d: 'ATELIER MOON', f: 'f5', sealed: '2026.07.08', views: 12 },
+  { t: 'Look 06 — 체크 플리츠 스커트', d: 'ATELIER MOON', f: 'f6', sealed: '2026.07.10', views: 17 }
+];
+
+var wm = '';
+for (var i = 0; i < 24; i++) wm += '<span>Stitchseal · Preview</span>';
+
+document.getElementById('cat').innerHTML = LOOKS.map(function(l) {
+  return '<div class="cat-card">' +
+    '<div class="swatch"><div class="fabric ' + l.f + '"></div><div class="wm">' + wm + '</div></div>' +
+    '<div class="cat-body">' +
+      '<div class="cat-top"><h3>' + l.t + '</h3><span class="badge ok">Sealed</span></div>' +
+      '<div class="designer">' + l.d + '</div>' +
+      '<div class="cat-meta">봉인 <b>' + l.sealed + '</b> · 창작 증명 검증됨<br>공개 수준: 바이어 프리뷰 (원본은 협의 후)</div>' +
+      '<div class="cat-actions">' +
+        '<button class="btn-sm primary" onclick="inquire(this, \'' + l.t.replace(/'/g, '') + '\')">디자이너에게 문의</button>' +
+        '<span class="viewed">👁 열람 ' + l.views + '회 기록됨</span>' +
+      '</div>' +
+    '</div></div>';
+}).join('');
+
+function inquire(btn, title) {
+  btn.textContent = '문의 전송됨 ✓ (데모)';
+  btn.disabled = true;
+  btn.style.background = 'var(--ok)';
+}
+</script>
+</body>
+</html>
