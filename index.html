@@ -4,13 +4,14 @@
 <meta charset="UTF-8">
 <meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#faf7f2">
+<meta name="theme-color" content="#D9C6FF">
 <title>STITCHSEAL — Enter</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.css">
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
 <style>
   :root { --font: 'Wanted Sans Variable', 'Wanted Sans', -apple-system, BlinkMacSystemFont, sans-serif; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { width: 100%; height: 100%; min-height: 100dvh; background: #faf7f2; overflow: hidden; }
+  html, body { width: 100%; height: 100%; min-height: 100dvh; background: #D9C6FF; overflow: hidden; }
   /* 튜브 캔버스는 불투명 검정으로 렌더링됨 → 반전+블렌드로 크림 배경 위 리본 스트로크로 변환 */
   canvas { position: fixed; inset: 0; width: 100%; height: 100%; filter: invert(1) hue-rotate(180deg); mix-blend-mode: multiply; }
 
@@ -33,8 +34,8 @@
     animation: breathe 1.8s ease-in-out infinite;
   }
   #btn-svg { display: block; width: 176px; height: 54px; overflow: visible; }
-  #btn-svg .brand-t { font-family: var(--font); font-size: 19.5px; font-weight: 200; fill: #7c3aed; }
-  #btn-svg .label-t { font-family: var(--font); font-size: 19.5px; font-weight: 200; fill: rgba(33,29,24,0.7); }
+  #btn-svg .brand-t { font-family: 'Black Han Sans', var(--font); font-size: 20px; font-weight: 400; fill: #2E1065; }
+  #btn-svg .label-t { font-family: var(--font); font-size: 19.5px; font-weight: 200; fill: rgba(46,16,101,0.75); }
   #enter-btn:hover {
     animation: none !important;
     opacity: 1 !important;
@@ -47,13 +48,13 @@
   }
 
   #fade-overlay {
-    position: fixed; inset: 0; background: #faf7f2;
+    position: fixed; inset: 0; background: #D9C6FF;
     opacity: 0; pointer-events: none; z-index: 99;
     transition: opacity 0.45s ease;
   }
 
   #loading-bar-wrap { width: 100%; opacity: 0; transition: opacity 0.18s ease; }
-  #loading-bar-track { position: relative; width: 100%; height: 1.5px; background: rgba(33,29,24,0.15); border-radius: 1px; }
+  #loading-bar-track { position: relative; width: 100%; height: 1.5px; background: rgba(46,16,101,0.2); border-radius: 1px; }
   #loading-bar-fill { height: 100%; width: 0%; background: #ffffff; border-radius: 1px; }
   #loading-pct {
     position: absolute; left: 50%; top: 6px; transform: translateX(-50%);
@@ -65,7 +66,7 @@
     position: fixed;
     top: calc(50% + 78px); left: 50%; transform: translateX(-50%);
     font-family: var(--font); font-size: 11px; font-weight: 300;
-    letter-spacing: 0.3em; color: rgba(33,29,24,0.45);
+    letter-spacing: 0.3em; color: rgba(46,16,101,0.6);
     white-space: nowrap; pointer-events: none; z-index: 10;
     text-transform: uppercase;
   }
@@ -74,7 +75,7 @@
     bottom: calc(28px + env(safe-area-inset-bottom, 0px));
     left: 50%; transform: translateX(-50%);
     font-family: var(--font); font-size: 10px; font-weight: 300;
-    letter-spacing: 0.18em; color: rgba(33,29,24,0.35);
+    letter-spacing: 0.18em; color: rgba(46,16,101,0.45);
     white-space: nowrap; pointer-events: none; z-index: 10;
   }
 </style>

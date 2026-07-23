@@ -5,209 +5,230 @@
 <meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>STITCHSEAL — 패션 디자인 IP 증명·거래 플랫폼</title>
-<meta name="description" content="런웨이에 오르기 전에, 디자인에 인장을. 블록체인 창작 증명 · 디자인 출원 연계 · B2B 거래">
+<meta name="description" content="세상에 보여주기 전에, 먼저 증명하세요. 블록체인 창작 증명 · 디자인 출원 연계 · B2B 거래">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.css">
-<link rel="stylesheet" href="assets/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+<style>
+  /* ── Wise 스타일 재해석: 라벤더 + 딥 바이올렛 (홈·랜딩 전용) ── */
+  :root {
+    --lav: #D9C6FF;
+    --lav-soft: #EFE7FF;
+    --forest: #2E1065;
+    --ink: #1c1723;
+    --card: #F3F0F8;
+    --accent: #7C3AED;
+    --font: 'Wanted Sans Variable', 'Wanted Sans', -apple-system, sans-serif;
+    --display: 'Black Han Sans', 'Wanted Sans Variable', sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font); color: var(--ink); background: #fff; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  .pill {
+    display: inline-block; padding: 13px 28px; border-radius: 999px;
+    font-size: 15px; font-weight: 600; text-decoration: none; cursor: pointer; border: none;
+    font-family: var(--font);
+    transition: transform 0.15s;
+  }
+  .pill:hover { transform: scale(1.04); }
+  .pill.dark { background: var(--forest); color: #fff; }
+  .pill.light { background: var(--lav); color: var(--forest); }
+  .pill.sm { padding: 10px 20px; font-size: 14px; }
+
+  /* 헤더 */
+  header { background: var(--lav); position: sticky; top: 0; z-index: 50; }
+  .head-in { max-width: 1120px; margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .logo { font-family: var(--display); font-size: 21px; color: var(--forest); text-decoration: none; letter-spacing: 0.02em; }
+  nav { display: flex; gap: 24px; align-items: center; }
+  nav a { color: var(--forest); text-decoration: none; font-size: 14.5px; font-weight: 600; }
+  nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  @media (max-width: 720px) { nav a:not(.pill) { display: none; } }
+
+  /* 히어로 */
+  .hero { background: var(--lav); text-align: center; padding: 76px 24px 96px; }
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(44px, 8.5vw, 104px);
+    line-height: 1.05; color: var(--forest); letter-spacing: 0.01em;
+  }
+  .hero p {
+    margin: 30px auto 0; max-width: 640px;
+    font-size: clamp(15px, 1.9vw, 19px); font-weight: 500; line-height: 1.65; color: var(--forest);
+  }
+  .hero .btns { margin-top: 38px; display: flex; gap: 18px; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .hero .link { color: var(--forest); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; font-size: 15px; }
+
+  /* 스탯 */
+  .stats { padding: 72px 0 8px; text-align: center; }
+  .stats-in { max-width: 1120px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  @media (max-width: 720px) { .stats-in { grid-template-columns: repeat(2, 1fr); gap: 32px 12px; } }
+  .stat-num { font-family: var(--display); font-size: clamp(34px, 4.5vw, 54px); color: var(--accent); line-height: 1; }
+  .stat-label { margin-top: 10px; font-size: 13.5px; font-weight: 600; color: #6b6377; }
+
+  /* 섹션 공통 */
+  section.block { padding: 88px 0; }
+  .sec-title { font-size: clamp(30px, 4.5vw, 46px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.18; }
+  .sec-desc { margin-top: 20px; font-size: 16.5px; line-height: 1.75; color: #4c4655; max-width: 640px; }
+
+  /* 카드 그리드 (Wise식 회색 라운드) */
+  .cards { margin-top: 48px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .cards.three { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 960px) { .cards, .cards.three { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .cards, .cards.three { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--card); border-radius: 24px; padding: 30px 26px;
+    transition: transform 0.2s;
+  }
+  .card:hover { transform: translateY(-4px); }
+  .card .no { font-family: var(--display); font-size: 26px; color: var(--accent); }
+  .card h3 { margin-top: 12px; font-size: 18px; font-weight: 700; }
+  .card p { margin-top: 10px; font-size: 14px; line-height: 1.7; color: #4c4655; }
+  .card.tint { background: var(--lav-soft); }
+
+  /* 제품 카드 쇼케이스 */
+  .feat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  @media (max-width: 860px) { .feat-grid { grid-template-columns: 1fr; } }
+  .product-card { background: var(--card); border-radius: 28px; padding: 34px 36px; position: relative; }
+  .product-card .label { font-size: 19px; font-weight: 700; color: var(--forest); }
+  .product-card .big {
+    font-family: var(--display); font-size: clamp(30px, 4.2vw, 46px);
+    color: var(--forest); margin-top: 14px; word-break: break-all; line-height: 1.15;
+  }
+  .product-card .chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 20px; background: #fff; border-radius: 999px; padding: 8px 16px;
+    font-size: 14px; font-weight: 600; color: var(--forest);
+  }
+  .product-card .chip .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+  .stack { position: absolute; inset: -14px auto auto -14px; right: 14px; height: 100%; border-radius: 28px; background: #E6DFF2; z-index: -1; }
+
+  /* 다크 스트립 CTA */
+  .strip { background: var(--forest); color: #fff; text-align: center; padding: 88px 24px; }
+  .strip h2 { font-family: var(--display); font-size: clamp(32px, 5.5vw, 64px); line-height: 1.12; color: var(--lav); }
+  .strip p { margin-top: 18px; font-size: 16px; font-weight: 500; opacity: 0.85; }
+  .strip .pill { margin-top: 32px; }
+
+  /* 푸터 */
+  footer { border-top: 1px solid #eee9f4; padding: 44px 0 56px; }
+  .footer-in { max-width: 1120px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .footer-logo { font-family: var(--display); font-size: 17px; color: var(--forest); }
+  .footer-copy { margin-top: 12px; font-size: 12.5px; color: #8a8494; line-height: 1.8; }
+  .footer-links { display: flex; gap: 22px; }
+  .footer-links a { font-size: 13.5px; font-weight: 600; color: #4c4655; text-decoration: none; }
+  .footer-links a:hover { color: var(--accent); }
+</style>
 </head>
 <body>
-<div id="page">
 
-  <header class="site">
-    <div class="header-in">
-      <a class="logo" href="home.html">STITCHSEAL</a>
-      <nav>
-        <a href="#how">How it works</a>
-        <a href="dashboard.html">Dashboard</a>
-        <a href="buyers.html">Buyers</a>
-        <a href="waitlist.html">사전등록</a>
-        <a class="nav-cta" href="register.html">디자인 등록</a>
-      </nav>
-    </div>
-  </header>
-
-  <!-- ── HERO ── -->
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-grid"></div>
-    <div class="hero-eyebrow fade-up">Fashion Design IP Platform</div>
-    <h1 class="fade-up">세상에 보여주기 전에,<br>먼저 <b>증명하세요</b></h1>
-    <p class="hero-sub fade-up">
-      패션은 보여주는 순간 카피가 시작되는 산업입니다.<br>
-      StitchSeal은 그 전에 창작 시점을 블록체인에 봉인합니다 — 증거에서 출원, 거래까지.
-    </p>
-    <div class="hero-btns fade-up">
-      <a class="btn btn-primary" href="register.html">디자인 등록 데모</a>
-      <a class="btn btn-ghost" href="#how">How it works</a>
-    </div>
-    <div class="scroll-ind">Scroll</div>
-  </section>
-
-  <!-- ── STATS ── -->
-  <div class="stats">
-    <div class="stats-in">
-      <div class="fade-up"><div class="stat-num"><b>3</b>초</div><div class="stat-label">창작 증명 발급</div></div>
-      <div class="fade-up"><div class="stat-num"><b>6</b>일</div><div class="stat-label">디자인 신속심사 연계</div></div>
-      <div class="fade-up"><div class="stat-num"><b>3</b>년</div><div class="stat-label">부경법 형태모방 보호</div></div>
-      <div class="fade-up"><div class="stat-num"><b>0</b></div><div class="stat-label">코인 발행 — 규제 밖 설계</div></div>
-    </div>
+<header>
+  <div class="head-in">
+    <a class="logo" href="home.html">STITCHSEAL</a>
+    <nav>
+      <a href="#how">How it works</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="buyers.html">Buyers</a>
+      <a href="waitlist.html">사전등록</a>
+      <a class="pill dark sm" href="register.html">디자인 등록</a>
+    </nav>
   </div>
+</header>
 
-  <!-- ── HOW IT WORKS : 사업모델 4단계 ── -->
-  <section class="block" id="how">
-    <div class="wrap">
-      <div class="sec-eyebrow fade-up">How it works</div>
-      <h2 class="sec-title fade-up">등록이 곧 <b>영업이 되는 구조</b></h2>
-      <p class="sec-desc fade-up">증명 단품은 팔리지 않습니다 — WIPO조차 접었습니다. StitchSeal은 증명을 '보험'이 아닌 '영업 자산'으로 바꿉니다. 등록된 디자인이 바이어에게 노출되고 거래로 이어지며, 그 과정에서 증거가 자동으로 쌓입니다.</p>
-      <div class="cards">
-        <div class="card fade-up">
-          <div class="step-no">01</div>
-          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 3v12m0-12 4 4m-4-4-4 4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg></div>
-          <h3>등록</h3>
-          <div class="en">Register</div>
-          <p>시즌 컬렉션 업로드 — 도식화·사진·작업지시서를 컬렉션 단위로 관리합니다.</p>
-        </div>
-        <div class="card fade-up">
-          <div class="step-no">02</div>
-          <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-          <h3>증명</h3>
-          <div class="en">Seal</div>
-          <p>파일의 해시값을 블록체인에 기록하고 조작 불가능한 창작 증명서를 발급합니다.</p>
-        </div>
-        <div class="card fade-up">
-          <div class="step-no">03</div>
-          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-5M12 3l7 4v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V7z"/></svg></div>
-          <h3>권리화</h3>
-          <div class="en">Rights</div>
-          <p>변리사 제휴로 특허청 디자인 출원까지 원스톱 — 증거를 정식 권리로 연결합니다.</p>
-        </div>
-        <div class="card fade-up">
-          <div class="step-no">04</div>
-          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M3 9h18M3 9l2-5h14l2 5M3 9v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9M9 13h6"/></svg></div>
-          <h3>거래</h3>
-          <div class="en">Trade</div>
-          <p>등록 디자인을 B2B 카탈로그로 바이어·제조사에 노출하고 라이선싱·수주로 연결합니다.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+<section class="hero">
+  <h1>보여주기 전에,<br>먼저 증명하세요</h1>
+  <p>패션은 보여주는 순간 카피가 시작되는 산업. StitchSeal은 그 전에 창작 시점을 블록체인에 봉인합니다 — 증거에서 출원, 거래까지.</p>
+  <div class="btns">
+    <a class="pill dark" href="register.html">3초 만에 봉인하기</a>
+    <a class="link" href="waitlist.html">사전등록 — 첫 시즌 무료</a>
+  </div>
+</section>
 
-  <!-- ── PROTECTION : 3단 보호 구조 ── -->
-  <section class="block" id="protection" style="padding-top: 0;">
-    <div class="wrap">
-      <div class="sec-eyebrow fade-up">Protection</div>
-      <h2 class="sec-title fade-up">등록은 권리가 아닙니다.<br>그래서 <b>3단으로 설계했습니다</b></h2>
-      <p class="sec-desc fade-up">"등록하면 보호됩니다"는 과장입니다. StitchSeal의 정직한 가치제안은 기존 법제와 상호보완하는 3단 구조입니다.</p>
-      <div class="cards three">
-        <div class="card fade-up">
-          <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
-          <h3>공개 전 즉시 증거</h3>
-          <div class="en">Blockchain Timestamp</div>
-          <p>도용 분쟁의 승패는 "누가 먼저"의 증거 싸움 — 공개 전 창작 시점을 저비용 퍼블릭 체인에 봉인합니다.</p>
-        </div>
-        <div class="card fade-up">
-          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M4 21h16M6 21V8l6-5 6 5v13M10 21v-6h4v6"/></svg></div>
-          <h3>정식 권리 연계</h3>
-          <div class="en">Design Registration</div>
-          <p>유일한 독점권은 디자인보호법 등록 — 의류는 신속심사 6일. 변리사 제휴 원스톱 출원으로 연결합니다.</p>
-        </div>
-        <div class="card fade-up">
-          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 3l7 4v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V7z"/></svg></div>
-          <h3>도용 대응 지원</h3>
-          <div class="en">Anti-Copy Enforcement</div>
-          <p>부정경쟁방지법 (자)목 — 등록 없이도 출시 후 3년 형태모방 금지. 체인 증거 리포트와 내용증명 템플릿으로 대응합니다.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── CTA 튜브 배너 ── -->
-  <section style="padding: 0 24px;">
-    <div class="cta-banner fade-up">
-      <canvas id="cta-canvas"></canvas>
-      <div class="cta-content">
-        <h2>당신의 다음 컬렉션,<br>공개 전에 <b>봉인하세요</b></h2>
-        <p>3초면 충분합니다. 사전등록하면 첫 시즌 등록이 무료입니다.</p>
-        <a class="btn btn-primary" href="waitlist.html">사전등록</a>
-      </div>
-      <div class="cta-hint">Move your cursor</div>
-    </div>
-  </section>
-
-  <!-- ── PARTNERS 예정 영역 ── -->
-  <section class="block" id="partners">
-    <div class="wrap">
-      <div class="sec-eyebrow fade-up">Partnership</div>
-      <h2 class="sec-title fade-up">기술이 아니라 <b>연결이 경쟁력입니다</b></h2>
-      <p class="sec-desc fade-up">디자이너 커뮤니티(초기 사용자) × 공공기관(재원) × 유통(출구) × 법률(신뢰) — 네 축의 파트너십이 이 사업의 진입장벽입니다.</p>
-      <div class="cards">
-        <div class="card fade-up"><h3>디자이너 커뮤니티</h3><div class="en">Community</div><p>창작 스튜디오·패션쇼 공간 제휴 — "쇼 전에 등록하고 무대에 올려라"</p></div>
-        <div class="card fade-up"><h3>공공기관</h3><div class="en">Public</div><p>서울시 패션 정책 · 특허청 IP 지원 · 콘진원 과제 연계</p></div>
-        <div class="card fade-up" onclick="location.href='buyers.html'" style="cursor:pointer;"><h3>유통 파트너</h3><div class="en">Distribution</div><p>도매 플랫폼·쇼룸·해외 리테일 — 등록에서 수주까지. <span style="color:var(--accent);">바이어 카탈로그 데모 →</span></p></div>
-        <div class="card fade-up"><h3>법률 파트너</h3><div class="en">Legal</div><p>변리사·법무 제휴 — 출원 원스톱과 도용 대응 패키지</p></div>
-      </div>
-    </div>
-  </section>
-
-  <footer class="site">
-    <div class="footer-in">
-      <div>
-        <div class="footer-logo">STITCHSEAL</div>
-        <div class="footer-copy">Prove first. Then show.<br>Copyright © STITCHSEAL. All rights reserved.</div>
-      </div>
-      <div class="footer-links">
-        <a href="register.html">Register</a>
-        <a href="certificate.html">Certificate</a>
-        <a href="verify.html">Verify</a>
-        <a href="index.html">Intro</a>
-      </div>
-    </div>
-  </footer>
-
+<div class="stats">
+  <div class="stats-in">
+    <div><div class="stat-num">3초</div><div class="stat-label">창작 증명 발급</div></div>
+    <div><div class="stat-num">6일</div><div class="stat-label">디자인 신속심사 연계</div></div>
+    <div><div class="stat-num">3년</div><div class="stat-label">부경법 형태모방 보호</div></div>
+    <div><div class="stat-num">0</div><div class="stat-label">코인 발행 — 규제 밖 설계</div></div>
+  </div>
 </div>
 
-<script>
-// 진입 페이드인
-requestAnimationFrame(function() {
-  requestAnimationFrame(function() {
-    document.getElementById('page').classList.add('in');
-  });
-});
+<section class="block" id="how">
+  <div class="wrap">
+    <h2 class="sec-title">등록이 곧<br>영업이 되는 구조</h2>
+    <p class="sec-desc">증명 단품은 팔리지 않습니다 — WIPO조차 접었습니다. StitchSeal은 증명을 '보험'이 아닌 '영업 자산'으로 바꿉니다.</p>
+    <div class="cards">
+      <div class="card"><div class="no">01</div><h3>등록</h3><p>시즌 컬렉션 업로드 — 도식화·사진·작업지시서를 컬렉션 단위로.</p></div>
+      <div class="card"><div class="no">02</div><h3>증명</h3><p>해시를 블록체인에 기록하고 조작 불가능한 창작 증명서 발급.</p></div>
+      <div class="card"><div class="no">03</div><h3>권리화</h3><p>변리사 제휴로 특허청 디자인 출원까지 원스톱.</p></div>
+      <div class="card"><div class="no">04</div><h3>거래</h3><p>B2B 카탈로그로 바이어에게 노출, 라이선싱·수주 연결.</p></div>
+    </div>
+  </div>
+</section>
 
-// 스크롤 페이드업
-(function() {
-  var els = document.querySelectorAll('.fade-up');
-  var observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  els.forEach(function(el) { observer.observe(el); });
-  document.querySelectorAll('.hero .fade-up').forEach(function(el) { el.classList.add('visible'); });
-})();
+<section class="block" style="padding-top: 0;">
+  <div class="wrap feat-grid">
+    <div>
+      <h2 class="sec-title">당신의 디자인이<br>당신 것이라는 증거</h2>
+      <p class="sec-desc">도식화 한 장을 올리면 3초 만에 SHA-256 지문이 생성되고 블록체인에 봉인됩니다. 파일 원본은 브라우저 밖으로 나가지 않아요 — 증거는 남고, 비밀은 지켜집니다.</p>
+      <a class="pill light" style="margin-top: 28px;" href="register.html">데모 체험하기</a>
+    </div>
+    <div style="position: relative;">
+      <div class="stack"></div>
+      <div class="product-card">
+        <div class="label">창작 증명서 · Look 07</div>
+        <div class="big">0x9d16…04e9</div>
+        <div class="chip"><span class="dot"></span> Sealed · 2026. 7. 16 봉인</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-// CTA 배너: 커서 튜브 그래픽 — StitchSeal 바이올렛 팔레트
-(function() {
-  var canvas = document.getElementById('cta-canvas');
-  if (!canvas) return;
-  setTimeout(function() {
-    import('https://cdn.jsdelivr.net/npm/threejs-components@0.0.19/build/cursors/tubes1.min.js')
-      .then(function(module) {
-        module.default(canvas, {
-          tubes: {
-            colors: ['#8a2be2', '#b18bff', '#f0a5c0'],
-            lights: {
-              intensity: 200,
-              colors: ['#b721ff', '#7eb3ff', '#f0a5c0', '#f4d03f']
-            }
-          }
-        });
-      })
-      .catch(function(e) { console.warn('Tubes 로드 실패', e); });
-  }, 100);
-})();
-</script>
+<section class="block" id="protection" style="padding-top: 0;">
+  <div class="wrap">
+    <h2 class="sec-title">등록은 권리가 아닙니다.<br>그래서 3단으로 설계했습니다</h2>
+    <p class="sec-desc">"등록하면 보호됩니다"는 과장입니다. 기존 법제와 상호보완하는 정직한 3단 구조.</p>
+    <div class="cards three">
+      <div class="card tint"><div class="no">①</div><h3>공개 전 즉시 증거</h3><p>도용 분쟁의 승패는 "누가 먼저"의 증거 싸움 — 공개 전 창작 시점을 퍼블릭 체인에 봉인합니다.</p></div>
+      <div class="card tint"><div class="no">②</div><h3>정식 권리 연계</h3><p>유일한 독점권은 디자인보호법 등록 — 의류는 신속심사 6일. 변리사 제휴 원스톱 출원.</p></div>
+      <div class="card tint"><div class="no">③</div><h3>도용 대응 지원</h3><p>부경법 (자)목 — 등록 없이도 출시 후 3년 형태모방 금지. 체인 증거 리포트로 대응합니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="strip">
+  <h2>카피는 빠릅니다.<br>증명은 더 빨라야 하니까</h2>
+  <p>사전등록 디자이너에게 첫 시즌 등록 무료</p>
+  <a class="pill light" href="waitlist.html">사전등록</a>
+</section>
+
+<section class="block" id="partners">
+  <div class="wrap">
+    <h2 class="sec-title">기술이 아니라<br>연결이 경쟁력입니다</h2>
+    <p class="sec-desc">디자이너 커뮤니티(초기 사용자) × 공공기관(재원) × 유통(출구) × 법률(신뢰) — 네 축의 파트너십이 이 사업의 진입장벽입니다.</p>
+    <div class="cards">
+      <div class="card"><h3>디자이너 커뮤니티</h3><p>창작 스튜디오·패션쇼 공간 제휴 — "쇼 전에 등록하고 무대에 올려라"</p></div>
+      <div class="card"><h3>공공기관</h3><p>서울시 패션 정책 · 특허청 IP 지원 · 콘진원 과제 연계</p></div>
+      <div class="card" onclick="location.href='buyers.html'" style="cursor:pointer;"><h3>유통 파트너</h3><p>도매 플랫폼·쇼룸·해외 리테일 — 등록에서 수주까지. <span style="color:var(--accent);font-weight:600;">바이어 카탈로그 데모 →</span></p></div>
+      <div class="card"><h3>법률 파트너</h3><p>변리사·법무 제휴 — 출원 원스톱과 도용 대응 패키지</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-in">
+    <div>
+      <div class="footer-logo">STITCHSEAL</div>
+      <div class="footer-copy">Prove first. Then show.<br>Copyright © STITCHSEAL. All rights reserved.</div>
+    </div>
+    <div class="footer-links">
+      <a href="register.html">Register</a>
+      <a href="certificate.html">Certificate</a>
+      <a href="verify.html">Verify</a>
+      <a href="waitlist.html">Waitlist</a>
+      <a href="index.html">Intro</a>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
