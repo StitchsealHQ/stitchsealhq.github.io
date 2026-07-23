@@ -7,9 +7,15 @@
 <title>STITCHSEAL — 패션 디자인 IP 증명·거래 플랫폼</title>
 <meta name="description" content="세상에 보여주기 전에, 먼저 증명하세요. 블록체인 창작 증명 · 디자인 출원 연계 · B2B 거래">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.css">
-<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+
 <style>
   /* ── Wise 스타일 재해석: 라벤더 + 딥 바이올렛 (홈·랜딩 전용) ── */
+  @font-face {
+    font-family: 'Paperlogy';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-display: swap;
+  }
   :root {
     --lav: #D9C6FF;
     --lav-soft: #EFE7FF;
@@ -18,7 +24,7 @@
     --card: #F3F0F8;
     --accent: #7C3AED;
     --font: 'Wanted Sans Variable', 'Wanted Sans', -apple-system, sans-serif;
-    --display: 'Black Han Sans', 'Wanted Sans Variable', sans-serif;
+    --display: 'Paperlogy', 'Wanted Sans Variable', sans-serif;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -80,7 +86,7 @@
     background: var(--card); border-radius: 24px; padding: 30px 26px;
     transition: transform 0.2s;
   }
-  .card:hover { transform: translateY(-4px); }
+  .card:hover { transform: translateY(-4px); outline: 2px dashed rgba(124,58,237,0.4); outline-offset: 5px; border-radius: 24px; }
   .card .no { font-family: var(--display); font-size: 26px; color: var(--accent); }
   .card h3 { margin-top: 12px; font-size: 18px; font-weight: 700; }
   .card p { margin-top: 10px; font-size: 14px; line-height: 1.7; color: #4c4655; }
@@ -103,11 +109,19 @@
   .product-card .chip .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
   .stack { position: absolute; inset: -14px auto auto -14px; right: 14px; height: 100%; border-radius: 28px; background: #E6DFF2; z-index: -1; }
 
-  /* 다크 스트립 CTA */
-  .strip { background: var(--forest); color: #fff; text-align: center; padding: 88px 24px; }
+  /* 다크 스트립 CTA + 마퀴 */
+  .strip { background: var(--forest); color: #fff; text-align: center; padding: 0 0 88px; overflow: hidden; }
+  .marquee { white-space: nowrap; overflow: hidden; padding: 22px 0; border-bottom: 2px dashed rgba(217,198,255,0.25); margin-bottom: 66px; }
+  .marquee span {
+    display: inline-block; animation: mq 22s linear infinite;
+    font-family: var(--display); font-size: 15px; letter-spacing: 0.22em; color: rgba(217,198,255,0.65);
+  }
+  @keyframes mq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   .strip h2 { font-family: var(--display); font-size: clamp(32px, 5.5vw, 64px); line-height: 1.12; color: var(--lav); }
   .strip p { margin-top: 18px; font-size: 16px; font-weight: 500; opacity: 0.85; }
   .strip .pill { margin-top: 32px; }
+
+  hr.stitch { border: 0; border-top: 2px dashed #E4D9F7; max-width: 1072px; margin: 0 auto; }
 
   /* 푸터 */
   footer { border-top: 1px solid #eee9f4; padding: 44px 0 56px; }
@@ -152,6 +166,7 @@
   </div>
 </div>
 
+<hr class="stitch">
 <section class="block" id="how">
   <div class="wrap">
     <h2 class="sec-title">등록이 곧<br>영업이 되는 구조</h2>
@@ -196,6 +211,7 @@
 </section>
 
 <section class="strip">
+  <div class="marquee"><span>PROVE FIRST — THEN SHOW — STITCHSEAL — PROVE FIRST — THEN SHOW — STITCHSEAL — PROVE FIRST — THEN SHOW — STITCHSEAL — PROVE FIRST — THEN SHOW — STITCHSEAL — PROVE FIRST — THEN SHOW — STITCHSEAL — PROVE FIRST — THEN SHOW — STITCHSEAL — PROVE FIRST — THEN SHOW — STITCHSEAL — PROVE FIRST — THEN SHOW — STITCHSEAL — PROVE FIRST — THEN SHOW — STITCHSEAL — PROVE FIRST — THEN SHOW — STITCHSEAL — PROVE FIRST — THEN SHOW — STITCHSEAL — PROVE FIRST — THEN SHOW — STITCHSEAL — </span></div>
   <h2>카피는 빠릅니다.<br>증명은 더 빨라야 하니까</h2>
   <p>사전등록 디자이너에게 첫 시즌 등록 무료</p>
   <a class="pill light" href="waitlist.html">사전등록</a>
